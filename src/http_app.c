@@ -211,39 +211,39 @@ static esp_err_t http_server_post_handler(httpd_req_t *req){
 
 static esp_err_t http_server_get_handler(httpd_req_t *req){
 
-    char* host = NULL;
+    //char* host = NULL;
     size_t buf_len;
     esp_err_t ret = ESP_OK;
 
     ESP_LOGD(TAG, "GET %s", req->uri);
 
-    /* Get header value string length and allocate memory for length + 1,
-     * extra byte for null termination */
-    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
-    if (buf_len > 1) {
-    	host = malloc(buf_len);
-    	if(httpd_req_get_hdr_value_str(req, "Host", host, buf_len) != ESP_OK){
-    		/* if something is wrong we just 0 the whole memory */
-    		memset(host, 0x00, buf_len);
-    	}
-    }
-
-	/* determine if Host is from the STA IP address */
-	wifi_manager_lock_sta_ip_string(portMAX_DELAY);
-	bool access_from_sta_ip = host != NULL?strstr(host, wifi_manager_get_sta_ip_string()):false;
-	wifi_manager_unlock_sta_ip_string();
-
-
-	if (host != NULL && !strstr(host, DEFAULT_AP_IP) && !access_from_sta_ip) {
-
-		/* Captive Portal functionality */
-		/* 302 Redirect to IP of the access point */
-		httpd_resp_set_status(req, http_302_hdr);
-		httpd_resp_set_hdr(req, http_location_hdr, http_redirect_url);
-		httpd_resp_send(req, NULL, 0);
-
-	}
-	else{
+//    /* Get header value string length and allocate memory for length + 1,
+//     * extra byte for null termination */
+//    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
+//    if (buf_len > 1) {
+//    	host = malloc(buf_len);
+//    	if(httpd_req_get_hdr_value_str(req, "Host", host, buf_len) != ESP_OK){
+//    		/* if something is wrong we just 0 the whole memory */
+//    		memset(host, 0x00, buf_len);
+//    	}
+//    }
+//
+//	/* determine if Host is from the STA IP address */
+//	wifi_manager_lock_sta_ip_string(portMAX_DELAY);
+//	bool access_from_sta_ip = host != NULL?strstr(host, wifi_manager_get_sta_ip_string()):false;
+//	wifi_manager_unlock_sta_ip_string();
+//
+//
+//	if (host != NULL && !strstr(host, DEFAULT_AP_IP) && !access_from_sta_ip) {
+//
+//		/* Captive Portal functionality */
+//		/* 302 Redirect to IP of the access point */
+//		httpd_resp_set_status(req, http_302_hdr);
+//		httpd_resp_set_hdr(req, http_location_hdr, http_redirect_url);
+//		httpd_resp_send(req, NULL, 0);
+//
+//	}
+//	else{
 
 		/* GET /  */
 		if(strcmp(req->uri, http_root_url) == 0){
@@ -324,12 +324,12 @@ static esp_err_t http_server_get_handler(httpd_req_t *req){
 			}
 		}
 
-	}
-
-    /* memory clean up */
-    if(host != NULL){
-    	free(host);
-    }
+//	}
+//
+//    /* memory clean up */
+//    if(host != NULL){
+//    	free(host);
+//    }
 
     return ret;
 
