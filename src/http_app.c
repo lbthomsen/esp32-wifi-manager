@@ -81,11 +81,11 @@ extern const uint8_t index_html_end[] asm("_binary_index_html_end");
 
 /* const httpd related values stored in ROM */
 const static char http_200_hdr[] = "200 OK";
-const static char http_302_hdr[] = "302 Found";
+//const static char http_302_hdr[] = "302 Found";
 const static char http_400_hdr[] = "400 Bad Request";
 const static char http_404_hdr[] = "404 Not Found";
 const static char http_503_hdr[] = "503 Service Unavailable";
-const static char http_location_hdr[] = "Location";
+//const static char http_location_hdr[] = "Location";
 const static char http_content_type_html[] = "text/html";
 const static char http_content_type_js[] = "text/javascript";
 const static char http_content_type_css[] = "text/css";
@@ -212,7 +212,7 @@ static esp_err_t http_server_post_handler(httpd_req_t *req){
 static esp_err_t http_server_get_handler(httpd_req_t *req){
 
     //char* host = NULL;
-    size_t buf_len;
+    //size_t buf_len;
     esp_err_t ret = ESP_OK;
 
     ESP_LOGD(TAG, "GET %s", req->uri);
